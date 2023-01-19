@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  style="
+    background-image: linear-gradient(#121212, #121212);
+    background-attachment: fixed;
+  "
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest Api - MVC Create Suppliers</title>
+    <link
+      rel="stylesheet"
+      href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css"
+    />
+    <style>
+      #app h1 {
+        color: white;
+        text-align: center;
+      }
+      #app .label {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="container is-max-desktop mt-5">
+        <h1 class="title">Add Supplier</h1>
+        <div class="field">
+            <label class="label">Company Name</label>
+            <div class="control">
+                <input type="text" placeholder="Company Name" class="input" name="company" id="company" autofocus>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Contact Name</label>
+            <div class="control">
+                <input type="text" placeholder="Contact Name" class="input" name="contact" id="contact">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+                <input type="text" placeholder="Email Address" class="input" name="email" id="email">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Phone Number</label>
+            <div class="control">
+                <input type="text" placeholder="Phone Number" class="input" name="phone" id="phone">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Active</label>
+            <div class="control">
+                <input type="text" placeholder="0 / 1" class="input" name="active" id="active">
+            </div>
+        </div>
+        <div class="control">
+            <a href="/" class="button is-info" style="margin-right:10px">Back</a>
+            <button class="button is-success" id="save">SAVE</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        document.getElementById('save').onclick = () => {
+            axios({
+                method: 'post', 
+                url: '/api/supplier', 
+                data: {
+                    company_name : document.getElementById("company").value.trim(),
+                    contact_name : document.getElementById("contact").value.trim(),
+                    email        : document.getElementById("email").value.trim(),
+                    phone        : document.getElementById("phone").value.trim(),
+                    active       : document.getElementById("active").value.trim()
+                }
+            }).then((result) => {
+                if (document.getElementById("company").value.trim() == "" || document.getElementById("contact").value.trim() == "" || document.getElementById("email").value.trim() == "" || document.getElementById("phone").value.trim() == "" || (document.getElementById("active").value != 0 && document.getElementById("active").value != 1) || isNaN(document.getElementById("active").value)) {
+                    alert('Info status: Data tidak boleh kosong')
+                }
+                else {
+                    alert('Info status: ' + result.status)
+                }
+                window.location = "/";
+            }).catch((err) => {
+                alert('error ' + err)
+            });
+        }
+    </script>
+</body>
+</html>
